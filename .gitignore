@@ -1,0 +1,11 @@
+*.pyo
+INSTALL.txt
+PureVPN/*.ovpn
+PureVPN/GENERATED.txt
+PureVPN/LOCATIONS.txt
+PureVPN/auth.txt
+PureVPN/countriesList.json
+PureVPN/pass.txt
+PureVPN/updatechecker.txt
+PureVPN/*.conf
+resources/settings.xml.*
