@@ -62,14 +62,13 @@ def getIPInfoFrom(source):
 
 
 def getIPAPI(link):
-    match = re.compile(ur'"city":"(.*?)".*"country":"(.*?)".*"isp":"(.*?)".*"query":"(.*?)".*"regionName":"(.*?)"').findall(link)
-    if len(match) > 0:
-        for city, country, isp, ip, region in match:
-            return [(ip, country, region, city, isp)]
-    else:
-        return None           
-        
-        
+    city = re.search(r'"city":"(.*?)"', link).group(1)
+    country = re.search(r'"country":"(.*?)"', link).group(1)
+    isp = re.search(r'"isp":"(.*?)"', link).group(1)
+    ip = re.search(r'"query":"(.*?)"', link).group(1)
+    region = re.search(r'"regionName":"(.*?)"', link).group(1)
+    return [(ip, country, region, city, isp)]
+
 def getIPInfoDB(link):
     match = re.compile(ur'<h5>Your IP address.*</h5>.*\s*.*<br>.*IP2Location.*\s*.*\s*<li>IP address.*<strong>(.+?)</strong>.*\s*\s*<li>Country : (.+?) <img.*\s*<li>State.*: (.+?)</li>.*\s*<li>City : (.+?)</li>').findall(link)    
     if len(match) > 0:
