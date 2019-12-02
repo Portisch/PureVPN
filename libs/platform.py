@@ -86,8 +86,12 @@ def stopVPN():
     if not fakeConnection():
         p = getPlatform()
         if p == platforms.LINUX or p == platforms.RPI:
-            #command="killall -9 openvpn"  
-            command = 'killall -SIGTERM openvpn'
+            #command="killall -9 openvpn"
+            sudo_password = addon.getSetting("sudo_password")
+            if not sudo_password == "":
+                command = 'echo \'%s\' | sudo -S killall -SIGTERM openvpn' % sudo_password
+            else:
+                command = "killall -SIGTERM openvpn"
             purevpnPath= str(getAddonPath(True, vpn_provider))
             origResolv = '/etc/resolv.conf'
             pureResolv = purevpnPath + "/puredns.conf"
@@ -105,7 +109,10 @@ def stopVPN():
                 pass
 
             #if p == platforms.LINUX and use_sudo : command = "sudo " + command
-            debugTrace("Stopping VPN with " + command)
+            if not sudo_password == "":
+                debugTrace("Stopping VPN with " + command.replace(sudo_password, "<hidden>"))
+            else:
+                debugTrace("Stopping VPN with " + command)
             os.system(command)
 
 
@@ -120,8 +127,13 @@ def startVPN(vpn_profile):
     if not fakeConnection():
         p = getPlatform()
         if p == platforms.RPI or p == platforms.LINUX:
-            command=getOpenVPNPath() + " \"" + vpn_profile + "\" > " + getVPNLogFilePath() + " &"           
-            debugTrace("Starting VPN with " + command)
+            addon = xbmcaddon.Addon("service.purevpn.monitor")
+            sudo_password = addon.getSetting("sudo_password")
+            command=getOpenVPNPath() + " \"" + vpn_profile + "\" > " + getVPNLogFilePath() + " &"
+            if not sudo_password == "":
+                debugTrace("Starting VPN with " + command.replace(sudo_password, "<hidden>"))
+            else:
+                debugTrace("Starting VPN with " + command)
             os.system(command)
             
         # **** ADD MORE PLATFORMS HERE ****
@@ -145,8 +157,13 @@ def getOpenVPNPath():
     #    return getAddonPath(False, "network.openvpn/bin/openvpn")
     if p == platforms.LINUX:
     #    return getAddonPath(False, "service.purevpn.monitor/bin/openvpn")
-        return "/usr/sbin/openvpn"
-        
+        addon = xbmcaddon.Addon("service.purevpn.monitor")
+        sudo_password = addon.getSetting("sudo_password")
+        if not sudo_password == "":
+            return 'echo \'%s\' | sudo -S "/usr/sbin/openvpn"' % sudo_password
+        else:
+            return "/usr/sbin/openvpn"
+
     # **** ADD MORE PLATFORMS HERE ****
     
     return
@@ -188,7 +205,12 @@ def checkVPNCommand(addon):
         if p == platforms.RPI or p == platforms.LINUX:
             # Issue the openvpn command, expecting to get the options screen back
             command = getOpenVPNPath() + " > " + getVPNLogFilePath() + " &"
-            infoTrace("platform.py", "Testing openvpn with : " + command)
+            addon = xbmcaddon.Addon("service.purevpn.monitor")
+            sudo_password = addon.getSetting("sudo_password")
+            if not sudo_password == "":
+                infoTrace("platform.py", "Testing openvpn with : " + command.replace(sudo_password, "<hidden>"))
+            else:
+                infoTrace("platform.py", "Testing openvpn with : " + command)
             os.system(command)
             xbmc.sleep(1000)
             i = 0

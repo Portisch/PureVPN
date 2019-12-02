@@ -46,6 +46,10 @@ msgctxt "#32005"
 msgid "Password"
 msgstr ""
 
+msgctxt "#32030"
+msgid "Sudo Password"
+msgstr ""
+
 msgctxt "#32006"
 msgid "Protocol (UDP recommended)"
 msgstr ""

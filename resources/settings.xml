@@ -7,6 +7,7 @@
         <setting label="32004" type="text" id="vpn_username" enable="eq(-3,)" default=""/>
         <setting label=""      type="text" id="vpn_password_validated" visible="false" enable="false" default=""/>
         <setting label="32005" type="text" id="vpn_password" enable="eq(-5,)" option="hidden"  default=""/>
+        <setting label="32030" type="text" id="sudo_password" enable="eq(-6,)" option="hidden"  default=""/>
         <setting label=""      type='lsep'/>
         <setting label="32006" type="labelenum" id="vpn_protocol" lvalues="32007|32008|32009"/>
         <setting id="ip_info_source" lvalues="32109|32105|32106|32107|32108"/>
