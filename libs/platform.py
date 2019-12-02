@@ -71,8 +71,8 @@ def getVPNLogFilePath():
     # Return the full filename for the VPN log file
     p = getPlatform()
     if p == platforms.LINUX or p == platforms.RPI:
-        return "/run/openvpn.log"
-        
+        return "/tmp/openvpn.log"
+
     # **** ADD MORE PLATFORMS HERE ****
     
     return ""
