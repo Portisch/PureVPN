@@ -927,6 +927,7 @@ def connectVPN(connection_order, vpn_profile):
     keys_copied = True
     cancel_attempt = False
     cancel_clear = False
+    ii = 'null'
     if provider_gen:
         ovpn_name = ""
         if not progress.iscanceled():
@@ -1093,7 +1094,6 @@ def connectVPN(connection_order, vpn_profile):
 
         if state == connection_status.CONNECTED:
             st_status = 'fail'
-            ii = 'null'
       
     # Determine what happened during the connection attempt        
     if state1 == connection_status.CONNECTED or state == connection_status.CONNECTED:
