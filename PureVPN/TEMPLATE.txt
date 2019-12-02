@@ -6,6 +6,7 @@ nobind
 persist-key
 persist-tun
 ca #CERT
+tls-cipher "DEFAULT:@SECLEVEL=0"
 tls-auth #TLSKEY 1
 cipher AES-256-CBC
 comp-lzo
