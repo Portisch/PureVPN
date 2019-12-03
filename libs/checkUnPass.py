@@ -48,7 +48,20 @@ def throwCall():
     debugTrace('Making a call to api for credentials verification and getting client id')
     data = urllib.urlencode(values)
     request = urllib2.Request(url, data, header)
-    response = urllib2.urlopen(request)
+    try:
+        response = urllib2.urlopen(request)
+    except urllib2.HTTPError, err:
+        if err.code == 404:
+            debugTrace('HTTPError 404: Page not found!')
+        elif err.code == 403:
+            debugTrace('HTTPError 403: Access denied!')
+        else:
+            debugTrace('Something happened! Error code: ' + err.code)
+        return
+    except urllib2.URLError, err:
+        debugTrace('Some other error happened: ' + err.reason)
+        return
+
     result = response.read()
     resp_json = json.loads(result)
 
