@@ -58,7 +58,8 @@ display_location_info = "false"
 # Set the addon name for use in the dialogs
 addon = xbmcaddon.Addon()
 addon_name = addon.getAddonInfo('name')
-
+addon.setSetting("vpn_provider", addon_name)
+addon.setSetting("vpn_provider_validated", addon_name)
 
 def refreshAddonFilterLists():
     # Fetch the list of excluded or filtered addons
