@@ -54,6 +54,12 @@ def getIconPath():
     
 
 def getFilteredProfileList(ovpn_connections, filter, addon):
+    # The VPN protocol can be blank if this is a new run and the wizard is being used.
+    # Force it to UDP as that's the most optimal and let them change in the settings.
+    if filter == "":
+        filter = "UDP"
+        if not addon == None:
+            addon.setSetting("vpn_protocol", "UDP")
     # Filter out the profiles that we're not using
     
     # Filter based on protocol type
