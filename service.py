@@ -33,7 +33,7 @@ from libs.common import setVPNState, getVPNState, stopRequested, ackStop, startR
 from libs.common import getVPNLastConnectedProfile, setVPNLastConnectedProfile, getVPNLastConnectedProfileFriendly, setVPNLastConnectedProfileFriendly
 from libs.common import getVPNCycle, clearVPNCycle, writeCredentials, getCredentialsPath, getFriendlyProfileName, isVPNMonitorRunning, setVPNMonitorState
 from libs.common import getConnectionErrorCount, setConnectionErrorCount, getAddonPath, isVPNConnected, resetVPNConfig, forceCycleLock, freeCycleLock
-from libs.platform import getPlatform, connection_status, getAddonPath, useSudo, writeVPNLog
+from libs.platform import getPlatform, connection_status, getAddonPath, useSudo, writeVPNLog, stopVPN
 from libs.utility import debugTrace, errorTrace, infoTrace, ifDebug
 from libs.vpnproviders import removeGeneratedFiles, cleanPassFiles, generateOVPNFiles, getVPNLocation
 from libs.credentials import defCred
@@ -522,5 +522,8 @@ if __name__ == '__main__':
             break
             
         timer = timer + delay
-                
-debugTrace("-- Exit service.py --")        
+
+if isVPNConnected():
+    stopVPNConnection()
+
+debugTrace("-- Exit service.py --")
